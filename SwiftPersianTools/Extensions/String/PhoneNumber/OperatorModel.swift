@@ -1,7 +1,3 @@
-//
-//  OperatorModel.swift
-//  SwiftPersianTools
-
 import Foundation
 
 public struct OperatorModel {
@@ -95,5 +91,19 @@ struct OperatorsList {
 
         operatorsList.append(OperatorModel(province: [], base: "کشوری", model: nil,
                                            type: [.Credit], prefix: "998", operatorName: .ShatelMobile))
+    }
+    
+    private func defineOperator(prefix: String) -> OperatorModel? {
+        return operatorsList.first(where: {$0.prefix == prefix})
+    }
+    
+    
+    mutating  func findOperatorName(_ number : String) -> String {
+        let start = number.index(number.startIndex, offsetBy: 1)
+        let end = number.index(number.endIndex, offsetBy: -7)
+        let range = start..<end
+        let mySubstring = number[range]
+
+        return  defineOperator(prefix: String(mySubstring))?.operatorName.rawValue ?? "error can not fine operator"
     }
 }
